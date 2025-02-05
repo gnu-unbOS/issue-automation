@@ -6,6 +6,11 @@ on:
       - reopened
       - closed
       - assigned
+    permissions:
+      contents: read
+      issues: write
+      project: write
+
 jobs:
   issue_opened_and_reopened:
     name: issue_opened_and_reopened
@@ -15,9 +20,9 @@ jobs:
       - name: 'Move issue to "Triage"'
         uses: leonsteinhaeuser/project-beta-automations@v2.2.1
         with:
-          gh_token: $GITHUB_TOKEN 
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
           organization: gnu-unbOS
-          project_id: 1 
+          project_id: 1
           resource_node_id: ${{ github.event.issue.node_id }}
           status_value: "Triage"
   issue_closed:
@@ -28,7 +33,7 @@ jobs:
       - name: 'Moved issue to "Done"'
         uses: leonsteinhaeuser/project-beta-automations@v2.2.1
         with:
-          gh_token: $GITHUB_TOKEN 
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
           organization: gnu-unbOS
           project_id: 1
           resource_node_id: ${{ github.event.issue.node_id }}
@@ -41,7 +46,7 @@ jobs:
       - name: 'Move issue to "In Progress"'
         uses: leonsteinhaeuser/project-beta-automations@v2.2.1
         with:
-          gh_token: $GITHUB_TOKEN 
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
           organization: gnu-unbOS
           project_id: 1
           resource_node_id: ${{ github.event.issue.node_id }}
