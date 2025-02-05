@@ -17,10 +17,17 @@ jobs:
     runs-on: ubuntu-24.04-arm
     if: github.repository == 'gnu-unbOS/issue-automation' && github.event_name == 'issues' && github.event.action == 'opened' || github.event.action == 'reopened'
     steps:
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: 'Move issue to "Triage"'
         uses: leonsteinhaeuser/project-beta-automations@v2.2.1
         with:
-          gh_token: ${{ secrets.GITHUB_TOKEN }}
+          gh_token: ${{ steps.generate_token.outputs.token }}
           organization: gnu-unbOS
           project_id: 1
           resource_node_id: ${{ github.event.issue.node_id }}
@@ -30,10 +37,17 @@ jobs:
     runs-on: ubuntu-24.04-arm
     if: github.repository == 'gnu-unbOS/issue-automation' &&  github.event_name == 'issues' && github.event.action == 'closed'
     steps:
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: 'Moved issue to "Done"'
         uses: leonsteinhaeuser/project-beta-automations@v2.2.1
         with:
-          gh_token: ${{ secrets.GITHUB_TOKEN }}
+          gh_token: ${{ steps.generate_token.outputs.token }}
           organization: gnu-unbOS
           project_id: 1
           resource_node_id: ${{ github.event.issue.node_id }}
@@ -43,10 +57,17 @@ jobs:
     runs-on: ubuntu-24.04-arm
     if: github.repository == 'gnu-unbOS/issue-automation' &&  github.event_name == 'issues' && github.event.action == 'assigned'
     steps:
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: 'Move issue to "In Progress"'
         uses: leonsteinhaeuser/project-beta-automations@v2.2.1
         with:
-          gh_token: ${{ secrets.GITHUB_TOKEN }}
+          gh_token: ${{ steps.generate_token.outputs.token }}
           organization: gnu-unbOS
           project_id: 1
           resource_node_id: ${{ github.event.issue.node_id }}
